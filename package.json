@@ -1,0 +1,15 @@
+{
+  "name": "postcard",
+  "author": "denisnarush <me@dennarush.com>",
+  "description": "post & gift cards",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/denisnarush/postcard.git"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13"
+  }
+}
