@@ -7,7 +7,9 @@
     "type": "git",
     "url": "https://github.com/denisnarush/postcard.git"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt-tinypng": "^0.5.3"
+  },
   "dependencies": {
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13"
