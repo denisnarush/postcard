@@ -8,5 +8,7 @@
     "url": "https://github.com/denisnarush/postcard.git"
   },
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
