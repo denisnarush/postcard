@@ -13,11 +13,12 @@ body {
     justify-content: center;
     overflow-x: hidden;
 }
+*{
+    box-sizing: border-box;
+}
 
-sc-card .umbra,
-sc-card .penumbra {
-    width: 100%;
-    height: 100%;
+.postcard__umbra,
+.postcard__penumbra {
     position: absolute;
     top: 0;
     left: 0;
@@ -25,9 +26,9 @@ sc-card .penumbra {
     animation-duration: 1s;
 }
 
-sc-card .umbra {
-    width: 270px;
-    height: 390px;
+.postcard__umbra {
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
     top: -5px;
     left: -5px;
     background: url(images/umbra.svg) center center no-repeat;
@@ -35,18 +36,18 @@ sc-card .umbra {
     opacity: 0.3;
 }
 
-sc-card .penumbra {
-    width: 330px;
-    height: 450px;
+.postcard__penumbra {
+    width: calc(100% + 70px);
+    height: calc(100% + 70px);
     top: -35px;
     left: -35px;
     background: url(images/penumbra.svg) center center no-repeat;
     transform: translateY(2px);
     opacity: 0;
 }
-sc-card {
-    width: 260px;
-    height: 380px;
+.postcard {
+    width: 6in;
+    height: 4.25in;
     position: relative;
     perspective: 500px;
     will-change: transform;
@@ -63,9 +64,27 @@ sc-card {
     justify-content: center;
     animation-duration: 1s;
     overflow: hidden;
+    border-radius: 3px;
 }
 
-.postcard__side_front{}
+.postcard__side_front{
+    background-color: white;
+    border: 3px dashed #ccc;
+    color: #ccc;
+    text-transform: uppercase;
+    font-size: 2vh;
+    transition: border-color .15s;
+    background-size: 100% auto;
+    background-position: center center;
+}
+.postcard__side_front.loaded{
+    font-size: 0;
+    border-color: transparent;
+}
+.postcard__side_front:hover{
+    border-color: cornflowerblue;
+    border-style: solid;
+}
 .postcard__side_back{
     transform: rotateY(180deg);
 }
@@ -88,16 +107,16 @@ sc-card {
     transform: rotateY(180deg);
 }
 
-.postcard_sideone .umbra{
+.postcard_sideone .postcard__umbra{
     animation-name: umbra;
 }
-.postcard_sidetwo .umbra{
+.postcard_sidetwo .postcard__umbra{
     animation-name: umbra;
 }
-.postcard_sideone .penumbra{
+.postcard_sideone .postcard__penumbra{
     animation-name: penumbra;
 }
-.postcard_sidetwo .penumbra{
+.postcard_sidetwo .postcard__penumbra{
     animation-name: penumbra;
 }
 
