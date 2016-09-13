@@ -15,6 +15,11 @@
     });
 
     document.querySelector('[type=file]').addEventListener('change', function () {
-        reader.readAsDataURL(this.files[0]);
+        try {
+            reader.readAsDataURL(this.files[0]);
+        } catch (e) {
+
+        }
+
     });
 }(this));
