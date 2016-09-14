@@ -17,6 +17,18 @@ body {
     box-sizing: border-box;
 }
 
+.postcard {
+    width: 6in;
+    height: 4.25in;
+    position: relative;
+    perspective: 500px;
+    will-change: transform;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+}
+
 .postcard__umbra,
 .postcard__penumbra {
     position: absolute;
@@ -45,13 +57,6 @@ body {
     transform: translateY(2px);
     opacity: 0;
 }
-.postcard {
-    width: 6in;
-    height: 4.25in;
-    position: relative;
-    perspective: 500px;
-    will-change: transform;
-}
 
 .postcard__side{
     backface-visibility: hidden;
@@ -77,14 +82,17 @@ body {
     background-size: 100% auto;
     background-position: center center;
 }
+
 .postcard__side_front.loaded{
     font-size: 0;
     border-color: transparent;
 }
+
 .postcard__side_front:hover{
     border-color: cornflowerblue;
     border-style: solid;
 }
+
 .postcard__side_back{
     transform: rotateY(180deg);
 }
@@ -110,12 +118,15 @@ body {
 .postcard_sideone .postcard__umbra{
     animation-name: umbra;
 }
+
 .postcard_sidetwo .postcard__umbra{
     animation-name: umbra;
 }
+
 .postcard_sideone .postcard__penumbra{
     animation-name: penumbra;
 }
+
 .postcard_sidetwo .postcard__penumbra{
     animation-name: penumbra;
 }
