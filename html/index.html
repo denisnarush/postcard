@@ -9,11 +9,21 @@
     <div class="postcard">
         <div class="postcard__umbra"></div>
         <div class="postcard__penumbra"></div>
-        <div class="postcard__side postcard__side_back">BACK</div>
-        <label class="postcard__side postcard__side_front">Click to upload your photo here<input type="file" multiple hidden>
-        </label>
+        <div class="postcard__side postcard__side_back">
+            <form action="/card/" method="post">
+                <label class="return">
+                    <textarea name="return" required autocomplete="off"></textarea>
+                </label>
+                <label class="message">
+                    <textarea name="message" required autocomplete="off"></textarea>
+                </label>
+                <label class="address">
+                    <textarea name="address" required autocomplete="off"></textarea>
+                </label>
+            </form>
+        </div>
+        <label class="postcard__side postcard__side_front"><input type="file" multiple hidden></label>
     </div>
-
 <script src="js/application.js" type="text/javascript"></script>
 </body>
 </html>
