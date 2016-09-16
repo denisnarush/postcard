@@ -13,9 +13,9 @@ var statusKeys = [
 ];
 
 var cardSchema = mongoose.Schema({
-    message:  String,
-    senderAddress: { type:String, required: true },
-    receiverAddress: { type:String, required: true },
+    message: { type: String, required: true },
+    senderAddress: { type: String, required: true },
+    receiverAddress: { type: String, required: true },
     createdOn: { type: Date, default: Date.now },
     statusKey: {
         type: String,
