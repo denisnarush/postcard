@@ -9,12 +9,23 @@ html, body {
 
 body {
     display: flex;
+    background-color: #fefefe;
     align-items: center;
     justify-content: center;
     overflow-x: hidden;
+    flex-direction: column;
 }
+
 *{
     box-sizing: border-box;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+}
+
+[unvisible]{
+    visibility: hidden;
 }
 
 form{
@@ -84,10 +95,6 @@ form .address{
     position: relative;
     perspective: 500px;
     will-change: transform;
-    -webkit-user-select: none;
-    -webkit-user-drag: none;
-    user-drag: none;
-    user-select: none;
 }
 
 .postcard__umbra,
@@ -185,7 +192,7 @@ form .address{
 }
 
 .postcard_sidetwo .postcard__umbra{
-    animation-name: umbra;
+    animation-name: umbratwo;
 }
 
 .postcard_sideone .postcard__penumbra{
@@ -193,7 +200,76 @@ form .address{
 }
 
 .postcard_sidetwo .postcard__penumbra{
-    animation-name: penumbra;
+    animation-name: penumbratwo;
+}
+
+
+.panel{
+    margin: .1in;
+    font-size: 0;
+}
+
+
+.button{
+    display: inline-block;
+/*    background-color: #337ab7;*/
+/*    color: #fff;*/
+/*    border: 2px solid #2070b5;*/
+    cursor: pointer;
+    padding: .65em 1em;
+    min-width: 1.4in;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 3px;
+    position: relative;
+    font-size: 13px;
+    letter-spacing: .1em;
+    margin: 1em;
+    animation-name: but;
+    perspective: 500;
+    box-shadow: 0 2px 6px rgba(0,0,0,.4);
+    animation-duration: 0.5s;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+.button[hidden]{
+    cursor: default;
+    animation-name: buthide;
+    opacity: 0;
+}
+
+@keyframes but{
+    0% {
+        transform: translateZ(-500px) scale(2);
+        
+
+        -webkit-filter: blur(3px);
+        box-shadow: 0 3px 20px rgba(0,0,0, .8);
+        opacity: 0;
+    }
+    50%{
+        opacity: .3;
+    }
+    100% {
+        transform: translateZ(0px) scale(1);
+        box-shadow: 0 2px 6px rgba(0,0,0,.4);
+        -webkit-filter: blur(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes buthide{
+    0% {
+        transform: translateZ(0px) scale(1);
+        box-shadow: 0 2px 6px rgba(0,0,0,.4);
+        -webkit-filter: blur(0px);
+    }
+    100% {
+
+        transform: translateZ(-500px) scale(2);
+        -webkit-filter: blur(3px);
+        box-shadow: 0 3px 20px rgba(0,0,0, .8);
+    }
 }
 
 @keyframes sideone{
@@ -251,6 +327,25 @@ form .address{
     }
 }
 
+@keyframes umbratwo{
+    25% {
+        opacity: .3;
+        transform: translateY(2px) rotateY(0deg);
+    }
+    50% {
+        opacity: 0;
+        transform: translateY(62px) rotateY(0deg);
+    }
+    75% {
+        opacity: 0;
+        transform: translateY(62px) rotateY(180deg);
+    }
+    100% {
+        opacity: 0.3;
+        transform: translateY(2px) rotateY(180deg);
+    }
+}
+
 @keyframes penumbra{
     25% {
         opacity: 0;
@@ -267,5 +362,23 @@ form .address{
     100% {
         opacity: 0;
         transform: translateY(2px) rotateY(180deg);
+    }
+}
+@keyframes penumbratwo{
+    25% {
+        opacity: 0;
+        transform: translateY(2px) rotateY(180deg);
+    }
+    50% {
+        opacity: .5;
+        transform: translateY(62px) rotateY(180deg);
+    }
+    75% {
+        opacity: .5;
+        transform: translateY(62px) rotateY(360deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(2px) rotateY(360deg);
     }
 }

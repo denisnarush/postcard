@@ -3,6 +3,13 @@
     'use strict';
 
     var reader = new FileReader();
+    
+    function backHandler () {
+        document.querySelector('.postcard').classList.remove('postcard_sideone');
+        document.querySelector('.postcard').classList.add('postcard_sidetwo');
+        this.setAttribute('hidden', '');
+        this.removeEventListener('click', backHandler);
+    }
 
     reader.addEventListener('load', function (e) {
 
@@ -10,7 +17,12 @@
         document.querySelector('.postcard__side_front').classList.add('loaded');
 
         setTimeout(function () {
+            document.querySelector('.postcard').classList.remove('postcard_sidetwo');
             document.querySelector('.postcard').classList.add('postcard_sideone');
+            setTimeout(function () {
+                document.querySelectorAll('.button')[0].removeAttribute('hidden');
+                document.querySelectorAll('.button')[0].addEventListener('click', backHandler);
+            }, 1100);
         }, 500);
     });
 
