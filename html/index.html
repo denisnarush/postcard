@@ -10,15 +10,15 @@
         <div class="postcard__umbra"></div>
         <div class="postcard__penumbra"></div>
         <div class="postcard__side postcard__side_back">
-            <form action="/card/" method="post">
+            <form action="/card/" method="post" name="card">
                 <label class="return">
-                    <textarea name="return" required autocomplete="off"></textarea>
+                    <textarea name="senderAddress" required autocomplete="off"></textarea>
                 </label>
                 <label class="message">
                     <textarea name="message" required autocomplete="off"></textarea>
                 </label>
                 <label class="address">
-                    <textarea name="address" required autocomplete="off"></textarea>
+                    <textarea name="receiverAddress" required autocomplete="off"></textarea>
                 </label>
             </form>
         </div>
@@ -26,7 +26,7 @@
     </div>
     <div class="panel">
         <span class="button" hidden>back</span>
-        <span class="button" hidden>next</span>
+        <button class="button" hidden type="submit">next</button>
     </div>
 <script src="js/application.js" type="text/javascript"></script>
 </body>

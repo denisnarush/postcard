@@ -1,4 +1,4 @@
-/*global FileReader, console*/
+/*global FileReader, FormData, console*/
 (function (window) {
     'use strict';
 
@@ -12,6 +12,7 @@
         event.target.removeEventListener('click', backHandler);
         document.querySelectorAll('.button')[1].setAttribute('hidden', '');
     }
+
     function validate() {
         if (document.querySelector('form').checkValidity()) {
             document.querySelectorAll('.button')[1].removeAttribute('hidden');
@@ -49,6 +50,27 @@
     }
 
     var holder = document.querySelector('.postcard__side_front');
+
+    
+    document.querySelectorAll('.button')[1].addEventListener('click', function () {
+        document.querySelector('form').submit();
+    });
+    document.querySelector('form').addEventListener('submit', function (event) {
+        var formElement = document.querySelector("form");
+        var request = new XMLHttpRequest();
+        var formData = new FormData(formElement);
+        var data = {};
+        var pair;
+
+        for (pair of formData.entries()) {
+            data[pair[0]] = pair[1];
+        }
+        debugger;
+        
+        request.open("POST", "/rest/card");
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.send(JSON.stringify(data));
+    });
 
     holder.ondragover = function () {
         holder.classList.add('hover');

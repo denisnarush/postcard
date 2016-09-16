@@ -229,6 +229,11 @@ form .address{
     animation-duration: 0.5s;
     opacity: 1;
     transition: opacity 0.5s;
+    -webkit-appearance: none;
+    border: none;
+}
+.button:focus{
+    outline: none;
 }
 .button[hidden]{
     cursor: default;
