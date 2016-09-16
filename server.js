@@ -17,7 +17,13 @@ db.once('open', function() {
 app.use(express.static('public', {index: 'index.html'}));
 // parse application/json
 app.use(bodyParser.json());
-app.use('/rest', require('./server/routs/index.js'));
+app.use('/rest', require('./server/routes/index.js'));
+
+// GLOBAL ERROR HANDLER
+app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
