@@ -2,13 +2,22 @@
 (function (window) {
     'use strict';
 
-    var reader = new FileReader();
+    var reader = new FileReader(event);
+    var i;
     
-    function backHandler () {
+    function backHandler() {
         document.querySelector('.postcard').classList.remove('postcard_sideone');
         document.querySelector('.postcard').classList.add('postcard_sidetwo');
-        this.setAttribute('hidden', '');
-        this.removeEventListener('click', backHandler);
+        event.target.setAttribute('hidden', '');
+        event.target.removeEventListener('click', backHandler);
+        document.querySelectorAll('.button')[1].setAttribute('hidden', '');
+    }
+    function validate() {
+        if (document.querySelector('form').checkValidity()) {
+            document.querySelectorAll('.button')[1].removeAttribute('hidden');
+        } else {
+            document.querySelectorAll('.button')[1].setAttribute('hidden', '');
+        }
     }
 
     reader.addEventListener('load', function (e) {
@@ -22,6 +31,7 @@
             setTimeout(function () {
                 document.querySelectorAll('.button')[0].removeAttribute('hidden');
                 document.querySelectorAll('.button')[0].addEventListener('click', backHandler);
+                validate();
             }, 1100);
         }, 500);
     });
@@ -32,6 +42,11 @@
         } catch (e) {
         }
     });
+
+    var fields = document.querySelectorAll('textarea');
+    for (i = 0; i < fields.length; i = i + 1) {
+        fields[i].addEventListener('input', validate);
+    }
 
     var holder = document.querySelector('.postcard__side_front');
 
