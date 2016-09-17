@@ -6,21 +6,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <form action="/rest/card/" method="post" name="card">
     <div class="postcard">
         <div class="postcard__umbra"></div>
         <div class="postcard__penumbra"></div>
         <div class="postcard__side postcard__side_back">
-            <form action="/card/" method="post" name="card">
+               <label for="" class="mark"></label>
                 <label class="return">
                     <textarea name="senderAddress" required autocomplete="off"></textarea>
                 </label>
                 <label class="message">
-                    <textarea name="message" required autocomplete="off"></textarea>
+                    <textarea name="message" autocomplete="off"></textarea>
                 </label>
                 <label class="address">
                     <textarea name="receiverAddress" required autocomplete="off"></textarea>
                 </label>
-            </form>
         </div>
         <label class="postcard__side postcard__side_front"><input type="file" multiple hidden></label>
     </div>
@@ -28,6 +28,7 @@
         <span class="button" hidden>back</span>
         <button class="button" hidden type="submit">next</button>
     </div>
+    </form>
 <script src="js/application.js" type="text/javascript"></script>
 </body>
 </html>

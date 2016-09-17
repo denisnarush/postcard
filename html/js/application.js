@@ -1,99 +1,93 @@
-/*global FileReader, FormData, console*/
+/* jshint browser: true, esversion: 6*/ 
+
 (function (window) {
     'use strict';
-
-    var reader = new FileReader(event);
-    var i;
-    
-    function backHandler() {
-        document.querySelector('.postcard').classList.remove('postcard_sideone');
-        document.querySelector('.postcard').classList.add('postcard_sidetwo');
-        event.target.setAttribute('hidden', '');
-        event.target.removeEventListener('click', backHandler);
-        document.querySelectorAll('.button')[1].setAttribute('hidden', '');
-    }
+    const container = document.querySelector('.postcard');
+    const fileInput = document.querySelector('[type=file]');
+    const prev = document.querySelectorAll('.button')[0];
+    const next = document.querySelectorAll('.button')[1];
+    const front = document.querySelector('.postcard__side_front');
+    const form = document.querySelector("form");
+    const fields = document.querySelectorAll('textarea');
+    const SIDE_ONE = 'postcard_sideone';
+    const SIDE_TWO = 'postcard_sidetwo';
+    const reader = new FileReader();
 
     function validate() {
         if (document.querySelector('form').checkValidity()) {
-            document.querySelectorAll('.button')[1].removeAttribute('hidden');
-        } else {
-            document.querySelectorAll('.button')[1].setAttribute('hidden', '');
+            next.removeAttribute('hidden');
+        }
+        else {
+            next.setAttribute('hidden', '');
         }
     }
 
-    reader.addEventListener('load', function (e) {
+    function onBack() {
+        container.classList.remove(SIDE_ONE);
+        container.classList.add(SIDE_TWO);
+        event.target.setAttribute('hidden', '');
+        event.target.removeEventListener('click', onBack);
+        next.setAttribute('hidden', '');
+    }
 
-        document.querySelector('.postcard__side_front').style.backgroundImage = 'url(' + e.target.result + ')';
-        document.querySelector('.postcard__side_front').classList.add('loaded');
-
+    function onLoadPhoto(event) {
+        front.style.backgroundImage = 'url(' + event.target.result + ')';
+        front.classList.add('loaded');
         setTimeout(function () {
-            document.querySelector('.postcard').classList.remove('postcard_sidetwo');
-            document.querySelector('.postcard').classList.add('postcard_sideone');
+            container.classList.remove(SIDE_TWO);
+            container.classList.add(SIDE_ONE);
             setTimeout(function () {
-                document.querySelectorAll('.button')[0].removeAttribute('hidden');
-                document.querySelectorAll('.button')[0].addEventListener('click', backHandler);
+                prev.removeAttribute('hidden');
+                prev.addEventListener('click', onBack);
                 validate();
             }, 1100);
         }, 500);
-    });
-
-    document.querySelector('[type=file]').addEventListener('change', function () {
-        try {
-            reader.readAsDataURL(this.files[0]);
-        } catch (e) {
-        }
-    });
-
-    var fields = document.querySelectorAll('textarea');
-    for (i = 0; i < fields.length; i = i + 1) {
-        fields[i].addEventListener('input', validate);
     }
 
-    var holder = document.querySelector('.postcard__side_front');
+    function onFile(event) {
+        try {
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        catch (error) {}
+    }
 
-    
-    document.querySelectorAll('.button')[1].addEventListener('click', function () {
-        document.querySelector('form').submit();
-    });
-    document.querySelector('form').addEventListener('submit', function (event) {
-        var formElement = document.querySelector("form");
+    function onSubmit(event) {
+        event.preventDefault();
         var request = new XMLHttpRequest();
-        var formData = new FormData(formElement);
+        var formData = new FormData(form);
+        var iterator = formData.entries();
         var data = {};
-        var pair;
-
-        for (pair of formData.entries()) {
+        for (const pair of formData.entries()) {
             data[pair[0]] = pair[1];
         }
-        debugger;
-        
         request.open("POST", "/rest/card");
         request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         request.send(JSON.stringify(data));
-    });
-
-    holder.ondragover = function () {
-        holder.classList.add('hover');
+    }
+    for (let i = 0; i < fields.length; i = i + 1) {
+        fields[i].addEventListener('input', validate);
+    }
+    reader.addEventListener('load', onLoadPhoto);
+    fileInput.addEventListener('change', onFile);
+    form.addEventListener('submit', onSubmit);
+    front.ondragover = function () {
+        front.classList.add('hover');
         return false;
     };
-    holder.ondragleave = function () {
-        holder.classList.remove('hover');
+    front.ondragleave = function () {
+        front.classList.remove('hover');
         return false;
     };
-    holder.ondragend = function () {
-        holder.classList.remove('hover');
+    front.ondragend = function () {
+        front.classList.remove('hover');
         return false;
     };
-    holder.ondrop = function (e) {
-        holder.classList.remove('hover');
-        holder.classList.add('loaded');
+    front.ondrop = function (e) {
+        front.classList.remove('hover');
+        front.classList.add('loaded');
         e.preventDefault();
-
         var file = e.dataTransfer.files[0];
-
         reader.readAsDataURL(file);
-
         return false;
     };
-  
 }(this));

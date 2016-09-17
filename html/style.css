@@ -28,22 +28,6 @@ body {
     visibility: hidden;
 }
 
-form{
-    width: 100%;
-    height: 100%;
-}
-
-form:after{
-    content: '';
-    display: block;
-    width: 1in;
-    height: 1in;
-    border-top: 1px solid #eee;
-    border-right: 1px solid #eee;
-    position: absolute;
-    right: 10mm;
-    top: 10mm;
-}
 form textarea{
     resize: none;
     background-color: transparent;
@@ -63,6 +47,15 @@ form label{
     position: absolute;
 }
 
+form .mark{
+    width: 1in;
+    height: 1in;
+    border-top: 1px solid #eee;
+    border-right: 1px solid #eee;
+    position: absolute;
+    right: 10mm;
+    top: 10mm;
+}
 form .return{
     top: 10mm;
     left: 10mm;
@@ -207,6 +200,7 @@ form .address{
 .panel{
     margin: .1in;
     font-size: 0;
+    text-align: center;
 }
 
 
