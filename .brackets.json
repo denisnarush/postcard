@@ -1,11 +1,12 @@
 {
-    "language": {
-        "javascript": {
-            "linting.prefer": [
+  "spaceUnits": 2
+  , "language": {
+    "javascript": {
+      "linting.prefer": [
                 "JSHint"
-            ],
-            "linting.usePreferredOnly": true
-        }
-    },
-    "linting.JSHint.collapsed": false
+            ]
+      , "linting.usePreferredOnly": true
+    }
+  }
+  , "linting.JSHint.collapsed": false
 }
