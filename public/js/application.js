@@ -11,11 +11,10 @@
   const SIDE_ONE = 'postcard_sideone';
   const SIDE_TWO = 'postcard_sidetwo';
   const reader = new FileReader();
-
   const canvas = document.querySelector('canvas');
+  const ctx = canvas.getContext('2d');
   canvas.width = 540 * 2;
   canvas.height = 372 * 2;
-  const ctx = canvas.getContext('2d');
 
   function validate() {
     if (document.querySelector('form').checkValidity()) {
@@ -40,7 +39,7 @@
       const d = photo.width / photo.height;
       const wd = canvas.width - canvas.height * d;
       ctx.drawImage(photo, 0, 0, photo.width, photo.height, wd / 2, 0, canvas.height * d, canvas.height);
-    }
+    };
     photo.src = event.target.result;
     setTimeout(function () {
       container.classList.remove(SIDE_TWO);
@@ -80,20 +79,15 @@
   fileInput.addEventListener('change', onFile);
   form.addEventListener('submit', onSubmit);
   front.ondragover = function () {
-    front.classList.add('hover');
     return false;
   };
   front.ondragleave = function () {
-    front.classList.remove('hover');
     return false;
   };
   front.ondragend = function () {
-    front.classList.remove('hover');
     return false;
   };
   front.ondrop = function (e) {
-    front.classList.remove('hover');
-    front.classList.add('loaded');
     e.preventDefault();
     var file = e.dataTransfer.files[0];
     reader.readAsDataURL(file);
