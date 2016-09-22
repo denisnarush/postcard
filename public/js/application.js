@@ -1,77 +1,102 @@
-/*global FileReader, console*/
+/* jshint browser: true, esversion: 6*/
 (function (window) {
-    'use strict';
+  'use strict';
+  const container = document.querySelector('.postcard');
+  const fileInput = document.querySelector('[type=file]');
+  const prev = document.querySelectorAll('.button')[0];
+  const next = document.querySelectorAll('.button')[1];
+  const front = document.querySelector('.postcard__side_front');
+  const form = document.querySelector('form');
+  const fields = document.querySelectorAll('textarea');
+  const SIDE_ONE = 'postcard_sideone';
+  const SIDE_TWO = 'postcard_sidetwo';
+  const reader = new FileReader();
 
-    var reader = new FileReader(event);
-    var i;
-    
-    function backHandler() {
-        document.querySelector('.postcard').classList.remove('postcard_sideone');
-        document.querySelector('.postcard').classList.add('postcard_sidetwo');
-        event.target.setAttribute('hidden', '');
-        event.target.removeEventListener('click', backHandler);
-        document.querySelectorAll('.button')[1].setAttribute('hidden', '');
+  const canvas = document.querySelector('canvas');
+  canvas.width = 540 * 2;
+  canvas.height = 372 * 2;
+  const ctx = canvas.getContext('2d');
+
+  function validate() {
+    if (document.querySelector('form').checkValidity()) {
+      next.removeAttribute('hidden');
     }
-    function validate() {
-        if (document.querySelector('form').checkValidity()) {
-            document.querySelectorAll('.button')[1].removeAttribute('hidden');
-        } else {
-            document.querySelectorAll('.button')[1].setAttribute('hidden', '');
-        }
+    else {
+      next.setAttribute('hidden', '');
     }
+  }
 
-    reader.addEventListener('load', function (e) {
+  function onBack() {
+    container.classList.remove(SIDE_ONE);
+    container.classList.add(SIDE_TWO);
+    event.target.setAttribute('hidden', '');
+    event.target.removeEventListener('click', onBack);
+    next.setAttribute('hidden', '');
+  }
 
-        document.querySelector('.postcard__side_front').style.backgroundImage = 'url(' + e.target.result + ')';
-        document.querySelector('.postcard__side_front').classList.add('loaded');
-
-        setTimeout(function () {
-            document.querySelector('.postcard').classList.remove('postcard_sidetwo');
-            document.querySelector('.postcard').classList.add('postcard_sideone');
-            setTimeout(function () {
-                document.querySelectorAll('.button')[0].removeAttribute('hidden');
-                document.querySelectorAll('.button')[0].addEventListener('click', backHandler);
-                validate();
-            }, 1100);
-        }, 500);
-    });
-
-    document.querySelector('[type=file]').addEventListener('change', function () {
-        try {
-            reader.readAsDataURL(this.files[0]);
-        } catch (e) {
-        }
-    });
-
-    var fields = document.querySelectorAll('textarea');
-    for (i = 0; i < fields.length; i = i + 1) {
-        fields[i].addEventListener('input', validate);
+  function onLoadPhoto(event) {
+    const photo = new Image();
+    photo.onload = function (evt) {
+      const d = photo.width / photo.height;
+      const wd = canvas.width - canvas.height * d;
+      ctx.drawImage(photo, 0, 0, photo.width, photo.height, wd / 2, 0, canvas.height * d, canvas.height);
     }
+    photo.src = event.target.result;
+    setTimeout(function () {
+      container.classList.remove(SIDE_TWO);
+      container.classList.add(SIDE_ONE);
+      setTimeout(function () {
+        prev.removeAttribute('hidden');
+        prev.addEventListener('click', onBack);
+        validate();
+      }, 1100);
+    }, 500);
+  }
 
-    var holder = document.querySelector('.postcard__side_front');
+  function onFile(event) {
+    try {
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    catch (error) {}
+  }
 
-    holder.ondragover = function () {
-        holder.classList.add('hover');
-        return false;
-    };
-    holder.ondragleave = function () {
-        holder.classList.remove('hover');
-        return false;
-    };
-    holder.ondragend = function () {
-        holder.classList.remove('hover');
-        return false;
-    };
-    holder.ondrop = function (e) {
-        holder.classList.remove('hover');
-        holder.classList.add('loaded');
-        e.preventDefault();
-
-        var file = e.dataTransfer.files[0];
-
-        reader.readAsDataURL(file);
-
-        return false;
-    };
-  
+  function onSubmit(event) {
+    event.preventDefault();
+    var request = new XMLHttpRequest();
+    var formData = new FormData(form);
+    var iterator = formData.entries();
+    var data = {};
+    for (const pair of formData.entries()) {
+      data[pair[0]] = pair[1];
+    }
+    request.open('POST', '/rest/card');
+    request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    request.send(JSON.stringify(data));
+  }
+  for (let i = 0; i < fields.length; i = i + 1) {
+    fields[i].addEventListener('input', validate);
+  }
+  reader.addEventListener('load', onLoadPhoto);
+  fileInput.addEventListener('change', onFile);
+  form.addEventListener('submit', onSubmit);
+  front.ondragover = function () {
+    front.classList.add('hover');
+    return false;
+  };
+  front.ondragleave = function () {
+    front.classList.remove('hover');
+    return false;
+  };
+  front.ondragend = function () {
+    front.classList.remove('hover');
+    return false;
+  };
+  front.ondrop = function (e) {
+    front.classList.remove('hover');
+    front.classList.add('loaded');
+    e.preventDefault();
+    var file = e.dataTransfer.files[0];
+    reader.readAsDataURL(file);
+    return false;
+  };
 }(this));

@@ -12,10 +12,11 @@ block content
         label(class='return')
           textarea(name='senderAddress' required autocomplete='off')
         label(class='message')
-          textarea(name='message' required autocomplete='off')
+          textarea(name='message' autocomplete='off')
         label(class='address')
             textarea( name='receiverAddress' required autocomplete='off')
     label(class='postcard__side postcard__side_front')
+      canvas Alt
       input(type='file' multiple hidden)
   div(class="panel")
     span(class="button" hidden) back
