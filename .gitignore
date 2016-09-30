@@ -1,8 +1,11 @@
 # WebStorm
 .idea
+
 # Node modules (npm folder)
 node_modules
+
 # Build
 build
+
 # Test coverage result
 coverage
