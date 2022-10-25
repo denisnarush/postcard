@@ -13,7 +13,7 @@
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-less": "^3.1.0",
-    "gulp-pug": "^3.0.4",
+    "gulp-pug": "^5.0.0",
     "jasmine-core": "^2.5.2",
     "karma": "^6.4.1",
     "karma-chrome-launcher": "^2.0.0",
